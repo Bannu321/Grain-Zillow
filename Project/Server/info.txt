@@ -1,0 +1,35 @@
+Here goes most of the backend
+
+
+server/
+├── config/
+│   ├── db.js             # MongoDB connection logic
+│   └── firebaseAdmin.js  # Firebase Admin SDK initialization
+│
+├── controllers/
+│   ├── authController.js   # Logic for login, logout, password changes
+│   ├── adminController.js  # Logic for admin actions (e.g., create manager)
+│   ├── managerController.js# Logic for manager actions (e.g., add user, control devices)
+│   └── userController.js   # Logic for user actions (e.g., view storage)
+│
+├── middleware/
+│   ├── authMiddleware.js   # Verifies JWT token to protect routes
+│   └── roleMiddleware.js   # Checks user roles (isAdmin, isManager)
+│
+├── models/
+│   ├── User.js             # Mongoose schema for Admins, Managers, and Users (with a 'role' field)
+│   ├── Godown.js           # Mongoose schema for the godown/warehouse
+│   └── Storage.js          # Mongoose schema for individual storage units
+│
+├── routes/
+│   ├── authRoutes.js       # Routes for /api/auth/login, etc.
+│   ├── adminRoutes.js      # Routes for /api/admin/...
+│   ├── managerRoutes.js    # Routes for /api/manager/...
+│   └── userRoutes.js       # Routes for /api/user/...
+│
+├── services/
+│   └── firebaseService.js  # Functions to fetch real-time data from Firebase
+│
+├── .env                    # Environment variables (DB_URI, JWT_SECRET, FIREBASE_CONFIG)
+├── package.json
+└── server.js               # Main server entry point
