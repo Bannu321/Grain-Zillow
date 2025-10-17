@@ -1,0 +1,6 @@
+The main file Structure 
+
+your-project-name/
+├── client/         # React Frontend
+├── server/         # Node.js + Express Backend
+└── package.json    # For running both client and server concurrently
