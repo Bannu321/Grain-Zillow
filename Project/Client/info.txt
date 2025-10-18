@@ -1,4 +1,4 @@
-Here goes mosdt of the frontend
+Here goes most of the frontend
 
 client/
 ├── public/
