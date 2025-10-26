@@ -102,6 +102,9 @@ function CaptchaBox({ onValidate, disabled }) {
 }
 
 
+
+
+
 // --- Main Login Component ---
 export default function GrainZillowLogin() {
   const navigate = useNavigate();
@@ -109,6 +112,12 @@ export default function GrainZillowLogin() {
   const [password, setPassword] = useState("");
   const [captchaValid, setCaptchaValid] = useState(false);
   const [authenticating, setAuthenticating] = useState(false);
+
+  const handelOK = () =>{
+    <Link className="secondary-link" to="/signup">
+                Create an account
+    </Link>
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
