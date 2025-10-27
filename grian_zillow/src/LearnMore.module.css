@@ -1,0 +1,158 @@
+/* All class names are prefixed for isolation */
+
+.lmBg {
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1B4332, #2A9D8F);
+  color: white;
+  overflow-x: hidden;
+}
+
+.lmHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.lmLogo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.lmLogoIcon {
+  color: #FFD166;
+  font-size: 28px;
+}
+
+.lmNavLinks {
+  display: flex;
+}
+
+.lmNavLink {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+.lmNavLink:hover {
+  color: #FFD166;
+}
+
+.lmSection {
+  padding: 120px 60px 80px;
+  text-align: center;
+}
+
+.lmSectionH1 {
+  font-size: 40px;
+  color: #FFD166;
+  margin-bottom: 20px;
+}
+
+.lmSectionP {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #f0f0f0;
+}
+
+.lmFeatures {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 60px;
+}
+
+.lmFeatureCard {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  width: 300px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+}
+.lmFeatureCard:hover {
+  transform: translateY(-5px);
+}
+.lmFeatureCardIcon {
+  font-size: 40px;
+  color: #FFD166;
+  margin-bottom: 15px;
+}
+.lmFeatureCardH3 {
+  margin-bottom: 10px;
+  color: #fff;
+}
+.lmFeatureCardP {
+  font-size: 15px;
+  color: #e0e0e0;
+}
+
+.lmHowItWorks {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 80px 20px;
+  border-radius: 20px;
+  margin-top: 60px;
+}
+
+.lmSteps {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+.lmStep {
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 20px;
+  width: 280px;
+  text-align: center;
+  transition: 0.3s;
+}
+.lmStep:hover {
+  background: rgba(255,255,255,0.15);
+}
+.lmStepIcon {
+  font-size: 35px;
+  color: #FFD166;
+  margin-bottom: 10px;
+}
+
+.lmBenefits {
+  margin-top: 80px;
+}
+
+.lmFooter {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: #f3efef !important;
+  background-color: #004D40!important;
+  opacity: 1 !important;
+  z-index: 100;
+  padding: 9px 0 3px 0;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .lmHeader { flex-direction: column; padding: 10px; }
+  .lmFeatures, .lmSteps { flex-direction: column; align-items: center; }
+}
