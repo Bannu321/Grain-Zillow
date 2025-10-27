@@ -109,18 +109,13 @@ function CaptchaBox({ onValidate, disabled }) {
 // --- Main Login Component ---
 export default function GrainZillowLogin() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [captchaValid, setCaptchaValid] = useState(false);
   const [authenticating, setAuthenticating] = useState(false);
 
-  const handelOK = () =>{
-    <Link className="secondary-link" to="/signup">
-                Create an account
-    </Link>
-  }
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userId || !password) {
       alert("Please enter both user id and password");
@@ -131,10 +126,27 @@ export default function GrainZillowLogin() {
       return;
     }
     setAuthenticating(true);
-    setTimeout(() => {
-      alert("Login successful! Redirecting to Grain Storage Dashboard...");
+
+    // Call login from AuthContext
+    const result = await login(userId, password);
+
+    if (result.success) {
+      const userRole = result.user.role;
+
+      // Redirect based on role
+      if (userRole === 'manager') {
+        navigate('/manager/dashboard');
+      } else if (userRole === 'admin') {
+        navigate('/admin/dashboard');
+      } else if (userRole === 'user') {
+        navigate('/user/dashboard');
+      } else {
+        navigate('/');
+      }
+    } else {
+      alert(result.message || 'Login failed. Please check your credentials.');
       setAuthenticating(false);
-    }, 1500);
+    }
   };
 
   return (
