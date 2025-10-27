@@ -1,0 +1,55 @@
+.homeBg {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #1B4332, #2A9D8F);
+  color: white;
+  overflow-x: hidden;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+.logo { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 600; }
+.navLinks a,
+.navLinks .link { color: white; text-decoration: none; margin: 0 15px; font-weight: 500; transition: 0.3s; }
+.navLinks a:hover,
+.navLinks .link:hover { color: #FFD166; }
+.main { text-align: center; padding-top: 120px; padding-bottom: 80px; }
+.buttons { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+.btn { padding: 12px 30px; font-size: 16px; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; font-weight: 600; }
+.btnPrimary { background-color: #FFD166; color: #1B4332; }
+.btnPrimary:hover { background-color: #FFE099; }
+.btnOutline { background: transparent; border: 2px solid #FFD166; color: #FFD166; }
+.btnOutline:hover { background-color: #FFD166; color: #1B4332; }
+.infoSection { display: flex; align-items: center; justify-content: space-around; padding: 80px 60px; gap: 40px; background-color: rgba(255, 255, 255, 0.05); flex-wrap: wrap;}
+.infoImg { width: 400px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+.infoText { max-width: 600px; }
+.infoText h2 { color: #FFD166; font-size: 32px; margin-bottom: 20px;}
+.infoText p { font-size: 17px; line-height: 1.8; color: #f0f0f0; }
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: #f3efef !important;
+  background-color: #004D40!important;
+  opacity: 1 !important;
+  z-index: 100;
+  padding: 9px 0 3px 0;
+  pointer-events: none;
+  box-shadow: none;
+}
+@media (max-width: 768px) {
+  .infoSection { flex-direction: column; text-align: center; }
+  .infoImg { width: 100%; }
+}

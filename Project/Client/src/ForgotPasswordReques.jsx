@@ -33,7 +33,7 @@ export default function ForgotPasswordRequest() {
       <img src="/grz_logo.jpg" alt="Logo" className="forgot-top-left-img" />
       {/* Top Right: Contact Us clickable */}
       <img
-        src="/cnt_logo.jpg"
+        src="/operator_black.png"
         alt="Contact Us"
         className="forgot-top-right-img"
         onClick={() => navigate("/contactus")}

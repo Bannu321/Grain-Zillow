@@ -179,7 +179,7 @@ export default function PrivacyPolicy() {
 
         <div className="navigation">
           <Link to="/terms" className="nav-btn secondary">Terms of Service</Link>
-          <Link to="/" className="nav-btn">Back to Login</Link>
+          <Link to="/login" className="nav-btn">Back to Login</Link>
         </div>
       </div>
 
