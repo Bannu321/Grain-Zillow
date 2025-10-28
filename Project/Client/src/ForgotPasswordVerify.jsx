@@ -134,7 +134,7 @@ export default function ForgotPasswordVerify() {
           </div>
           <div className="secondary-text">
             <p>
-              <Link to="/">Back to Login</Link> &nbsp;|&nbsp;
+              <Link to="/login">Back to Login</Link> &nbsp;|&nbsp;
               <Link to="/contactus">Contact Support</Link>
             </p>
           </div>

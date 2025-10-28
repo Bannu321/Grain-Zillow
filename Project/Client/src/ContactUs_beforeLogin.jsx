@@ -34,7 +34,7 @@ export default function ContactUs_beforeLogin() {
         <div className="back-to-login">
           <button 
             className="back-btn"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/login")}
           >
             <i className="fas fa-arrow-left"></i> Back to Login
           </button>

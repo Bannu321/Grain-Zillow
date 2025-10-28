@@ -2,21 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./SignUp.css";
 
-const roles = [
-  {
-    key: "user",
-    icon: "👤",
-    name: "User",
-    desc: "Monitor grain storage"
-  },
-  {
-    key: "manager",
-    icon: "👨‍💼",
-    name: "Manager",
-    desc: "Full system access"
-  }
-];
-
 function getPasswordStrength(pw) {
   let score = 0;
   if (pw.length >= 8) score++;
@@ -30,7 +15,6 @@ function getPasswordStrength(pw) {
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [role, setRole] = useState("");
   const [fullName, setFullName] = useState("");
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +25,7 @@ export default function Signup() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!role || !fullName || !userId || !password || !confirmPassword) {
+    if (!fullName || !userId || !password || !confirmPassword) {
       alert("Please fill in all fields");
       return;
     }
@@ -55,9 +39,8 @@ export default function Signup() {
     }
     setSubmitting(true);
     setTimeout(() => {
-      alert(`Account created successfully!\n\nWelcome ${fullName} (${role})!\n\nYou can now log in.`);
+      alert(`Account created successfully!\n\nWelcome ${fullName}!\n\nYou can now log in.`);
       setSubmitting(false);
-      setRole("");
       setFullName("");
       setUserId("");
       setPassword("");
@@ -69,7 +52,7 @@ export default function Signup() {
     <div className="signup-bg">
       <img src="/grz_logo.jpg" alt="Logo" className="signup-left-img" />
       <img
-        src="/cnt_logo.jpg"
+        src="/operator_black.png"
         alt="Contact Us"
         className="signup-right-img"
         style={{ cursor: "pointer" }}
@@ -85,25 +68,6 @@ export default function Signup() {
               <div className="tagline">Create Your Account</div>
             </div>
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Select Your Role</label>
-                <div className="role-selection">
-                  {roles.map(r => (
-                    <div
-                      key={r.key}
-                      className={`role-option${role === r.key ? " selected" : ""}`}
-                      onClick={() => setRole(r.key)}
-                      tabIndex={0}
-                      role="button"
-                      aria-label={r.name}
-                    >
-                      <div className="role-icon">{r.icon}</div>
-                      <div className="role-name">{r.name}</div>
-                      <div className="role-desc">{r.desc}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
               <div className="form-group">
                 <label htmlFor="fullName">Full Name</label>
                 <input
@@ -122,7 +86,7 @@ export default function Signup() {
                   type="text"
                   id="userId"
                   className="form-control"
-                  placeholder="Choose a user ID"
+                  placeholder="Enter your user ID"
                   value={userId}
                   onChange={e => setUserId(e.target.value)}
                   required
@@ -219,7 +183,7 @@ export default function Signup() {
             <div className="secondary-text">
               <p>
                 Already have an account?{" "}
-                <Link to="/" className="secondary-link">Sign in here</Link>
+                <Link to="/login" className="secondary-link">Sign in here</Link>
               </p>
             </div>
           </div>

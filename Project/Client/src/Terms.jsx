@@ -116,7 +116,7 @@ export default function Terms() {
         </div>
 
         <div className="navigation">
-          <Link to="/" className="nav-btn secondary">Back to Login</Link>
+          <Link to="/login" className="nav-btn secondary">Back to Login</Link>
           <a href="/privacy-policy" className="nav-btn">Privacy Policy</a>
         </div>
       </div>
