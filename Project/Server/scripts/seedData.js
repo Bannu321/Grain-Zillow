@@ -372,7 +372,7 @@ class Seeder {
                     status: 'approved',
                     duration: {
                         startDate: new Date('2024-03-01'),
-                        plannedDuration: ninety
+                        plannedDuration: 90
                     },
                     notes: 'Animal feed corn'
                 },

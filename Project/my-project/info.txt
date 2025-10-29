@@ -1,0 +1,56 @@
+Here goes most of the frontend
+
+client/
+├── public/
+│   └── index.html          # Public HTML file
+│
+├── src/
+│   ├── api/
+│   │   └── axiosInstance.js # Centralized Axios config for API calls
+│   │
+│   ├── assets/
+│   │   ├── images/
+│   │   └── styles/         # Global styles if any
+│   │
+│   ├── components/
+│   │   ├── common/         # Reusable components (Button, Input, Modal, Spinner)
+│   │   ├── layout/         # Navbar, Sidebar, Footer
+│   │   └── dashboard/      # Role-specific dashboard widgets (e.g., SensorCard, UserList)
+│   │
+│   ├── context/
+│   │   └── AuthContext.js  # Manages global state for authentication and user info
+│   │
+│   ├── hooks/
+│   │   ├── useAuth.js      # Custom hook to access AuthContext
+│   │   └── useFirebase.js  # Custom hook for real-time Firebase listeners
+│   │
+│   ├── pages/
+│   │   ├── auth/
+│   │   │   ├── Login.jsx
+│   │   │   └── ChangePassword.jsx
+│   │   │
+│   │   ├── admin/
+│   │   │   ├── AdminDashboard.jsx
+│   │   │   └── ManageManagers.jsx
+│   │   │
+│   │   ├── manager/
+│   │   │   ├── ManagerDashboard.jsx
+│   │   │   └── ManageUsers.jsx
+│   │   │
+│   │   ├── user/
+│   │   │   └── UserDashboard.jsx
+│   │   │
+│   │   └── shared/
+│   │       ├── Profile.jsx
+│   │       └── NotFound.jsx
+│   │
+│   ├── routes/
+│   │   ├── AppRoutes.jsx   # Main router logic
+│   │   └── ProtectedRoute.jsx # Component to protect routes based on role
+│   │
+│   ├── App.jsx             # Main application component
+│   └── index.js            # React app entry point
+│
+├── package.json
+├── tailwind.config.js      # Tailwind CSS configuration
+└── postcss.config.js       # PostCSS configuration for Tailwind

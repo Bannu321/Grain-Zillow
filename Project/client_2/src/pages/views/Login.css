@@ -1,0 +1,238 @@
+body {
+  background-image: url('login_bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Top Corner Images */
+.top-images {
+  position: relative;
+  height: 100vh;
+}
+.top-left-img {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  width: 80px;
+  z-index: 2;
+  border: 0px;
+  border-radius: 20%;
+}
+.top-right-img {
+  position: absolute;
+  top: 29px;
+  right: 28px;
+  width: 60px;
+  z-index: 2;
+}
+
+/* Sticky Footer */
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: #f3efef !important;
+  background-color: #004D40!important;
+  opacity: 1 !important;
+  z-index: 100;
+  padding: 9px 0 3px 0;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  padding-bottom: 60px; /* Leaves room for sticky footer */
+  box-sizing: border-box;
+}
+
+.login-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 35px rgba(27, 67, 50, 0.17), 0 2px 8px rgba(0,0,0,0.07);
+  padding: 35px 30px;
+  text-align: center;
+  border: 1px solid #E8F5E8;
+  max-width: 400px;
+  min-width: 285px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logo-section {
+  margin-bottom: 25px;
+}
+.logo-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1B4332;
+  letter-spacing: -0.5px;
+}
+.tm {
+  font-size: 12px;
+  vertical-align: super;
+}
+.tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #2A9D8F;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* Form fields */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1B4332;
+}
+.form-control {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #E8F5E8;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: #F8FDF8;
+}
+
+.captcha-container {
+  background-color: #F8FDF8;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #E8F5E8;
+}
+.captcha-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.captcha-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1B4332;
+}
+.captcha-refresh {
+  background: none;
+  border: none;
+  color: #2A9D8F;
+  cursor: pointer;
+  font-size: 12px;
+}
+.captcha-challenge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  padding: 12px;
+  background-color: #F5F2E7;
+  border-radius: 6px;
+  min-height: 50px;
+}
+.captcha-text {
+  font-family: 'Courier New', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1B4332;
+  letter-spacing: 2px;
+  text-decoration: line-through;
+  transform: skew(-5deg);
+}
+.captcha-input {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  border: 1px solid #E8F5E8;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: white;
+  font-family: 'Courier New', monospace;
+  text-align: center;
+  letter-spacing: 1px;
+}
+.captcha-error {
+  color: #D32F2F;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #E8F5E8, transparent);
+  margin: 20px 0;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
+.login-btn:hover {
+  background-color: #43A047;
+}
+.login-btn-disabled {
+  background-color: #A5D6A7;
+  cursor: not-allowed;
+}
+
+.secondary-text {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #666666;
+  line-height: 1.4;
+}
+.secondary-link {
+  color: #2A9D8F;
+  text-decoration: none;
+  font-weight: 600;
+}
+.secondary-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 20px 15px;
+    max-width: 95vw;
+    min-width: 160px;
+  }
+  .logo-text {
+    font-size: 24px;
+  }
+  .top-left-img, .top-right-img {
+    width: 50px;
+    top: 12px;
+  }
+  .top-left-img { left: 12px; }
+  .top-right-img { right: 12px; }
+}

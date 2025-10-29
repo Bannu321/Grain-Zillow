@@ -1,0 +1,87 @@
+.problemSection {
+  background: linear-gradient(135deg, #1B4332, #2D6A4F);
+  color: white;
+  padding: 100px 50px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.heading {
+  font-size: 40px;
+  color: #FFD166;
+  margin-bottom: 20px;
+}
+
+.description {
+  max-width: 900px;
+  margin: 0 auto 50px;
+  font-size: 18px;
+  line-height: 1.8;
+  color: #f0f0f0;
+}
+
+.cardsContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.card {
+  background: rgba(255,255,255,0.08);
+  border-radius: 15px;
+  width: 300px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  outline: none;
+}
+
+.card:hover,
+.card:focus {
+  transform: translateY(-8px);
+}
+
+.cardImage {
+  width: 80px;
+  margin-bottom: 15px;
+}
+
+.cardTitle {
+  color: #FFD166;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.cardDescription {
+  font-size: 15px;
+  color: #e0e0e0;
+}
+
+.footerText {
+  max-width: 850px;
+  margin: 60px auto 30px;
+  font-size: 17px;
+  color: #dcdcdc;
+}
+
+.backButtonContainer {
+  margin-top: 40px;
+}
+
+.backButton {
+  padding: 12px 25px;
+  background-color: #FFD166;
+  color: #1B4332;
+  font-weight: bold;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.backButton:hover {
+  background-color: #e6c24a;
+}

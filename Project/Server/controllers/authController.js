@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Notification = require('../models/Notification');
 const { JWT_SECRET, JWT_EXPIRES_IN, ROLES } = require('../config/constants');
+require('dotenv').config();
 
 /**
  * Authentication Controller

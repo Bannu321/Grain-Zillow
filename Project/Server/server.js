@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -14,6 +15,8 @@ const dataRoutes = require('./routes/data');
 const storageRoutes = require('./routes/storage');
 const iotRoutes = require('./routes/iot');
 const notificationRoutes = require('./routes/notifications');
+const siloRoutes = require('./routes/silo');
+
 
 const app = express();
 
@@ -29,6 +32,7 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
+
 
 // Rate limiting
 const limiter = rateLimit({
@@ -76,6 +80,8 @@ app.use('/api/data', dataRoutes);
 app.use('/api/storage', storageRoutes);
 app.use('/api/iot', iotRoutes);
 app.use('/api/notifications', notificationRoutes);
+
+app.use("/api/silos", siloRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
