@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Layout from "./components/Layout";
+import ContentContainer from "./components/ContentContainer";
+import Button from "./components/Button";
 
 const faqs = [
   {
@@ -7,9 +10,11 @@ const faqs = [
     answer: (
       <>
         <p>
-          <strong>GrainZillow</strong> is a smart IoT-based grain storage monitoring system that
-          tracks temperature, humidity, and gas levels inside silos and provides real-time alerts and control features.
-          It's designed to prevent grain spoilage and ensure optimal storage conditions through continuous monitoring and automated responses.
+          <strong>GrainZillow</strong> is a smart IoT-based grain storage
+          monitoring system that tracks temperature, humidity, and gas levels
+          inside silos and provides real-time alerts and control features. It's
+          designed to prevent grain spoilage and ensure optimal storage
+          conditions through continuous monitoring and automated responses.
         </p>
       </>
     ),
@@ -19,9 +24,11 @@ const faqs = [
     icon: "fas fa-cogs",
     answer: (
       <p>
-        The system uses <strong>sensors like DHT11, MQ2, and MQ135</strong> to collect environmental data inside
-        the silo. Data is sent to an <strong>ESP32 microcontroller</strong>, which processes it and updates readings on the web dashboard
-        via a cloud database. Users can monitor conditions in real-time and control ventilation systems remotely.
+        The system uses <strong>sensors like DHT11, MQ2, and MQ135</strong> to
+        collect environmental data inside the silo. Data is sent to an{" "}
+        <strong>ESP32 microcontroller</strong>, which processes it and updates
+        readings on the web dashboard via a cloud database. Users can monitor
+        conditions in real-time and control ventilation systems remotely.
       </p>
     ),
   },
@@ -30,9 +37,11 @@ const faqs = [
     icon: "fas fa-exclamation-triangle",
     answer: (
       <p>
-        When any reading crosses safe thresholds, the dashboard immediately shows a <strong>red warning (DANGER)</strong> indicator.
-        The system can automatically or manually activate fans to stabilize conditions and prevent spoilage or combustion.
-        Critical alerts are prominently displayed to ensure immediate attention.
+        When any reading crosses safe thresholds, the dashboard immediately
+        shows a <strong>red warning (DANGER)</strong> indicator. The system can
+        automatically or manually activate fans to stabilize conditions and
+        prevent spoilage or combustion. Critical alerts are prominently
+        displayed to ensure immediate attention.
       </p>
     ),
   },
@@ -41,8 +50,9 @@ const faqs = [
     icon: "fas fa-globe",
     answer: (
       <p>
-        <strong>Yes, absolutely!</strong> The fan can be turned on or off through the web interface from anywhere with internet.
-        This allows full remote grain storage monitoring and management.
+        <strong>Yes, absolutely!</strong> The fan can be turned on or off
+        through the web interface from anywhere with internet. This allows full
+        remote grain storage monitoring and management.
       </p>
     ),
   },
@@ -51,8 +61,9 @@ const faqs = [
     icon: "fas fa-user-shield",
     answer: (
       <p>
-        Each user has a <strong>unique User ID</strong>, permitting access only to their assigned silo’s data.
-        Proper authentication and authorization protect privacy, and admins can manage multiple users and access rights.
+        Each user has a <strong>unique User ID</strong>, permitting access only
+        to their assigned silo's data. Proper authentication and authorization
+        protect privacy, and admins can manage multiple users and access rights.
       </p>
     ),
   },
@@ -62,8 +73,12 @@ const faqs = [
     answer: (
       <>
         <p>
-          <strong>Yes, comprehensive historical data storage is included.</strong> All sensor readings and control actions
-          are stored and accessible. Users can view trends, analyze storage conditions over time, and optimize for better safety.
+          <strong>
+            Yes, comprehensive historical data storage is included.
+          </strong>{" "}
+          All sensor readings and control actions are stored and accessible.
+          Users can view trends, analyze storage conditions over time, and
+          optimize for better safety.
         </p>
       </>
     ),
@@ -73,8 +88,9 @@ const faqs = [
     icon: "fas fa-bell",
     answer: (
       <p>
-        Unsafe gas, humidity, or temperature levels trigger immediate red highlights on the dashboard.
-        Notifications are sent via the web interface, with plans to add email and SMS alerts in future updates.
+        Unsafe gas, humidity, or temperature levels trigger immediate red
+        highlights on the dashboard. Notifications are sent via the web
+        interface, with plans to add email and SMS alerts in future updates.
       </p>
     ),
   },
@@ -82,13 +98,27 @@ const faqs = [
     question: "What technologies are used in GrainZillow?",
     icon: "fas fa-microchip",
     answer: (
-      <ul className="list-disc pl-5 space-y-1">
+      <ul
+        style={{
+          listStyleType: "disc",
+          paddingLeft: "20px",
+          marginTop: "0",
+          lineHeight: "1.6",
+        }}
+      >
         <li>
-          <strong>Hardware:</strong> ESP32 microcontroller, DHT11 (temp/humidity), MQ2 & MQ135 (gas sensors)
+          <strong>Hardware:</strong> ESP32 microcontroller, DHT11
+          (temp/humidity), MQ2 & MQ135 (gas sensors)
         </li>
-        <li><strong>Backend:</strong> Firebase/Cloud database</li>
-        <li><strong>Frontend:</strong> Web dashboard with HTML, CSS, JS</li>
-        <li><strong>Connectivity:</strong> Wi-Fi for data transmission</li>
+        <li>
+          <strong>Backend:</strong> Firebase/Cloud database
+        </li>
+        <li>
+          <strong>Frontend:</strong> Web dashboard with HTML, CSS, JS
+        </li>
+        <li>
+          <strong>Connectivity:</strong> Wi-Fi for data transmission
+        </li>
       </ul>
     ),
   },
@@ -96,7 +126,14 @@ const faqs = [
     question: "Can the project be expanded in the future?",
     icon: "fas fa-rocket",
     answer: (
-      <ul className="list-disc pl-5 space-y-1">
+      <ul
+        style={{
+          listStyleType: "disc",
+          paddingLeft: "20px",
+          marginTop: "0",
+          lineHeight: "1.6",
+        }}
+      >
         <li>AI predictive maintenance</li>
         <li>Multi-silo management</li>
         <li>Automated machine learning control systems</li>
@@ -111,136 +148,258 @@ const faqs = [
     icon: "fas fa-users",
     answer: (
       <p>
-        <strong>Developed by a 5-member team</strong> at VIT-AP University with hardware and software expertise,
-        under expert mentorship to address real-world grain storage challenges.
+        <strong>Developed by a 5-member team</strong> at VIT-AP University with
+        hardware and software expertise, under expert mentorship to address
+        real-world grain storage challenges.
       </p>
     ),
   },
 ];
 
 export default function FAQs() {
-  const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const toggleSidebar = () => setSidebarExpanded(prev => !prev);
-
   const toggleFAQ = (index) => {
-    setActiveIndex(prevIndex => (prevIndex === index ? null : index));
+    setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+
+  // --- Style objects ---
+  const styles = {
+    welcomeSection: {
+      backgroundColor: "white",
+      borderRadius: "12px",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      padding: "20px",
+      width: "100%",
+      maxWidth: "768px",
+      textAlign: "center",
+      marginBottom: "24px",
+    },
+    headline: {
+      color: "#0d9488",
+      fontWeight: "700",
+      fontSize: "28px",
+      marginBottom: "12px",
+    },
+    faqSection: {
+      backgroundColor: "white",
+      borderRadius: "12px",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
+      padding: "28px",
+      width: "100%",
+      maxWidth: "768px",
+      marginBottom: "24px",
+    },
+    faqIntro: {
+      backgroundColor: "white",
+      borderRadius: "12px",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      padding: "28px",
+      marginBottom: "32px",
+      textAlign: "center",
+    },
+    faqIntroTitle: {
+      color: "#0d9488",
+      fontWeight: "600",
+      fontSize: "24px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "12px",
+      marginBottom: "16px",
+    },
+    faqIntroText: {
+      color: "#475569",
+      fontSize: "16px",
+      maxWidth: "480px",
+      margin: "0 auto",
+      lineHeight: "1.6",
+    },
+    faqItem: {
+      borderBottom: "1px solid #e5e7eb",
+      paddingTop: "20px",
+      paddingBottom: "20px",
+      transition: "background-color 0.3s ease",
+      borderRadius: "8px",
+    },
+    faqItemActive: {
+      backgroundColor: "#f3f4f6",
+      borderRadius: "8px",
+    },
+    faqQuestion: {
+      cursor: "pointer",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      color: "#0d9488",
+      fontWeight: "600",
+      fontSize: "18px",
+      userSelect: "none",
+      padding: "0 8px",
+    },
+    faqAnswerContainer: {
+      overflow: "hidden",
+      transition: "max-height 0.3s ease",
+      color: "#475569",
+      marginTop: "16px",
+      fontSize: "16px",
+      lineHeight: "1.6",
+      padding: "0 8px",
+    },
+    faqAnswerShow: {
+      maxHeight: "500px",
+    },
+    faqAnswerHide: {
+      maxHeight: "0",
+    },
+    faqIcon: {
+      fontSize: "24px",
+      color: "#0d9488",
+      transition: "transform 0.3s ease",
+      minWidth: "24px",
+    },
+    faqIconRotate: {
+      transform: "rotate(180deg)",
+    },
+    contactSupport: {
+      marginTop: "24px",
+      padding: "32px",
+      borderRadius: "12px",
+      backgroundImage: "linear-gradient(to top right, #dcfce7, #bbf7d0)",
+      textAlign: "center",
+      width: "100%",
+      maxWidth: "768px",
+    },
+    contactSupportTitle: {
+      color: "#166534",
+      fontWeight: "600",
+      fontSize: "22px",
+      marginBottom: "16px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "12px",
+    },
+    contactSupportText: {
+      color: "#475569",
+      fontSize: "16px",
+      marginBottom: "24px",
+      lineHeight: "1.6",
+    },
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#f2fdfb] to-[#e6f4f1] font-[Poppins] text-gray-800">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 flex items-center justify-between h-[70px] bg-gradient-to-r from-teal-700 to-teal-900 text-white px-6 shadow-lg z-50">
-        <button onClick={toggleSidebar} className="text-2xl focus:outline-none" aria-label="Toggle Sidebar">
-          <i className="fas fa-ellipsis-v"></i>
-        </button>
-        <div className="flex items-center space-x-2 text-lg font-semibold">
-          <i className="fas fa-seedling text-2xl"></i>
-          <h1>GrainZillow</h1>
-        </div>
-        <button className="bg-white text-teal-700 font-semibold rounded-md px-4 py-2 hover:bg-gray-100 transition">
-          Logout
-        </button>
-      </header>
+    <Layout currentPage="FAQs" variant="admin">
+      <ContentContainer>
+        {/* Welcome Section */}
+        <section style={styles.welcomeSection}>
+          <h1 style={styles.headline}>
+            <i className="fas fa-question-circle"></i> Frequently Asked
+            Questions
+          </h1>
+          <p style={{ color: "#64748b", fontSize: "16px" }}>
+            Find answers to common questions about GrainZillow
+          </p>
+        </section>
 
-      {/* Sidebar */}
-      <nav className={`fixed top-0 left-0 h-full bg-white shadow-lg pt-[70px] transition-all duration-300 z-40 overflow-hidden ${sidebarExpanded ? "w-56" : "w-16"}`}>
-        <ul className="flex flex-col text-gray-700">
-          {[
-            { icon: "fas fa-home", label: "Dashboard" },
-            { icon: "fas fa-users", label: "Employee Management" },
-            { icon: "fas fa-tasks", label: "Task Assignment" },
-            { icon: "fas fa-comments", label: "Message Centre" },
-            { icon: "fas fa-history", label: "History Logs" },
-            { icon: "fas fa-pen", label: "Manual Grain Entry" },
-            { icon: "fas fa-user", label: "My Profile" },
-            { icon: "fas fa-info-circle", label: "About Us" },
-            { icon: "fas fa-question-circle", label: "FAQs", active: true },
-            { icon: "fas fa-phone", label: "Contact Us" },
-          ].map(({ icon, label, active }, idx) => (
-            <li key={label}>
-              <a href="#"
-                 className={`flex items-center gap-3 px-4 py-3 border-l-4 border-transparent hover:bg-teal-100 hover:text-teal-900 transition ${
-                   active ? "bg-teal-100 border-teal-700 text-teal-900 font-semibold" : ""
-                 }`}>
-                <i className={`${icon} w-6 text-center`}></i>
-                <span className={`whitespace-nowrap transition-opacity ${sidebarExpanded ? "opacity-100" : "opacity-0"}`}>
-                  {label}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      {/* Main Content */}
-      <main className={`pt-[70px] px-10 pb-8 transition-all duration-300 flex-grow ${sidebarExpanded ? "ml-56" : "ml-16"} flex flex-col items-center`}>
-        <div className="welcome bg-white rounded-lg shadow-md p-5 w-full max-w-4xl mb-10 text-center">
-          <h1 className="text-teal-700 text-3xl font-bold mb-2">Frequently Asked Questions</h1>
-          <p>Find answers to common questions about GrainZillow</p>
-        </div>
-
-        <div className="faq-section max-w-4xl w-full">
-          <div className="faq-intro bg-white rounded-lg shadow-lg p-7 mb-10 text-center">
-            <h2 className="text-teal-700 text-2xl font-semibold flex items-center justify-center gap-3 mb-4">
+        {/* FAQ Section */}
+        <section style={styles.faqSection}>
+          <div style={styles.faqIntro}>
+            <h2 style={styles.faqIntroTitle}>
               <i className="fas fa-question-circle"></i> Need Help?
             </h2>
-            <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto">
-              Browse through our frequently asked questions to learn more about how GrainZillow works, its features, and how it can help you manage grain storage effectively.
+            <p style={styles.faqIntroText}>
+              Browse through our frequently asked questions to learn more about
+              how GrainZillow works, its features, and how it can help you
+              manage grain storage effectively.
             </p>
           </div>
 
-          <div className="faq-container bg-white rounded-lg shadow-lg p-7">
-            {faqs.map(({ question, icon, answer }, idx) => (
+          {faqs.map(({ question, icon, answer }, idx) => {
+            const isActive = idx === activeIndex;
+            return (
               <div
                 key={idx}
-                className={`faq-item border-b border-gray-200 py-5 transition-colors ${activeIndex === idx ? "bg-gray-100 rounded-md" : ""}`}
+                style={{
+                  ...styles.faqItem,
+                  ...(isActive ? styles.faqItemActive : {}),
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.backgroundColor = "#f8fafc";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.backgroundColor = "transparent";
+                  }
+                }}
               >
-                <div
-                  className="faq-question flex items-center justify-between cursor-pointer"
-                  onClick={() => toggleFAQ(idx)}
-                >
-                  <h3 className="text-teal-700 text-lg flex items-center gap-3 m-0">
-                    <i className={icon}></i> {question}
+                <div style={styles.faqQuestion} onClick={() => toggleFAQ(idx)}>
+                  <h3
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      margin: 0,
+                      fontSize: "16px",
+                    }}
+                  >
+                    <i
+                      className={icon}
+                      style={{ fontSize: "18px", color: "#0d9488" }}
+                    ></i>
+                    {question}
                   </h3>
                   <i
-                    className={`fas fa-chevron-down faq-icon text-teal-700 text-xl transform transition-transform duration-300 ${
-                      activeIndex === idx ? "rotate-180" : ""
-                    }`}
+                    className={`fas fa-chevron-down`}
+                    style={{
+                      ...styles.faqIcon,
+                      ...(isActive ? styles.faqIconRotate : {}),
+                    }}
                   ></i>
                 </div>
                 <div
-                  className="faq-answer overflow-hidden transition-max-height duration-300 ease-in-out"
-                  style={{ maxHeight: activeIndex === idx ? "500px" : "0px" }}
+                  style={{
+                    ...styles.faqAnswerContainer,
+                    ...(isActive ? styles.faqAnswerShow : styles.faqAnswerHide),
+                  }}
                 >
-                  <div className="mt-4 text-gray-700 leading-relaxed">{answer}</div>
+                  <div style={{ paddingBottom: "8px" }}>{answer}</div>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </section>
 
-          <div className="contact-support bg-gradient-to-tr from-green-100 to-green-200 rounded-lg p-8 mt-10 text-center">
-            <h3 className="text-green-800 text-xl font-semibold mb-4 flex items-center justify-center gap-3">
-              <i className="fas fa-headset"></i> Still Have Questions?
-            </h3>
-            <p className="text-gray-700 mb-6">
-              Can't find the answer you're looking for? Our support team is here to help you with any additional questions or technical support needs.
-            </p>
-            <button
-              onClick={() => alert('Contact support clicked!')}
-              className="bg-teal-700 hover:bg-teal-900 text-white font-semibold rounded-md px-6 py-3 inline-flex items-center gap-3"
-            >
-              <i className="fas fa-phone"></i> Contact Support
-            </button>
-          </div>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-teal-900 text-white text-center py-3 mt-auto w-full">
-        © 2025 GrainZillow — Smart Grain Storage Monitoring System
-      </footer>
-    </div>
+        {/* Contact Support Section */}
+        <section style={styles.contactSupport}>
+          <h3 style={styles.contactSupportTitle}>
+            <i className="fas fa-headset"></i> Still Have Questions?
+          </h3>
+          <p style={styles.contactSupportText}>
+            Can't find the answer you're looking for? Our support team is here
+            to help you with any additional questions or technical support
+            needs.
+          </p>
+          <Button
+            variant="primary"
+            icon="fa-phone"
+            onClick={() =>
+              alert(
+                "Contact support clicked! You can reach us at support@grainzillow.com"
+              )
+            }
+            buttonStyle={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "12px",
+            }}
+          >
+            Contact Support
+          </Button>
+        </section>
+      </ContentContainer>
+    </Layout>
   );
 }

@@ -1,9 +1,13 @@
 import React from "react";
 import styles from "./ProblemSection.module.css";
 import { Link } from "react-router-dom";
+import NavBar from "./NavBar";
 export default function ProblemSection() {
   return (
+    <>
+    <NavBar/>
     <section id="problem" className={styles.problemSection}>
+      
       <h1 className={styles.heading}>The Problem We Are Solving</h1>
 
       <p className={styles.description}>
@@ -63,5 +67,6 @@ export default function ProblemSection() {
         </a>
       </div>
     </section>
+    </>
   );
 }

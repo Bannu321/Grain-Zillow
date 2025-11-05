@@ -1,27 +1,64 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
+import Layout from "./components/Layout";
+import ContentContainer from "./components/ContentContainer";
+import InputField from "./components/InputField";
+import SelectField from "./components/SelectField";
+import Button from "./components/Button";
+import DataTable from "./components/DataTable";
 
 const initialGrainStorage = {
   wheat: { current: 1250, capacity: 3000 },
   corn: { current: 1800, capacity: 3000 },
   rice: { current: 800, capacity: 2000 },
-  barley: { current: 1200, capacity: 2000 }
+  barley: { current: 1200, capacity: 2000 },
 };
 
 const totalCapacity = 10000;
 
 const initialTransactions = [
-  { date: "2025-01-15", type: "in", grain: "wheat", quantity: 500, customer: "John Smith", client: "AgriCorp Ltd." },
-  { date: "2025-01-14", type: "out", grain: "corn", quantity: 300, customer: "Green Valley Farms", client: "FoodPro Inc." },
-  { date: "2025-01-13", type: "in", grain: "rice", quantity: 350, customer: "Robert Johnson", client: "Rice Distributors" },
-  { date: "2025-01-12", type: "out", grain: "barley", quantity: 200, customer: "Brew Masters Co.", client: "Beverage Partners" }
+  {
+    id: 1,
+    date: "2025-01-15",
+    type: "in",
+    grain: "wheat",
+    quantity: 500,
+    customer: "John Smith",
+    client: "AgriCorp Ltd.",
+  },
+  {
+    id: 2,
+    date: "2025-01-14",
+    type: "out",
+    grain: "corn",
+    quantity: 300,
+    customer: "Green Valley Farms",
+    client: "FoodPro Inc.",
+  },
+  {
+    id: 3,
+    date: "2025-01-13",
+    type: "in",
+    grain: "rice",
+    quantity: 350,
+    customer: "Robert Johnson",
+    client: "Rice Distributors",
+  },
+  {
+    id: 4,
+    date: "2025-01-12",
+    type: "out",
+    grain: "barley",
+    quantity: 200,
+    customer: "Brew Masters Co.",
+    client: "Beverage Partners",
+  },
 ];
 
 export default function ManualGrainEntry() {
-  const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const [grainStorage, setGrainStorage] = useState(initialGrainStorage);
-  const [transactionHistory, setTransactionHistory] = useState(initialTransactions);
+  const [transactionHistory, setTransactionHistory] =
+    useState(initialTransactions);
 
-  // Form state
   const [form, setForm] = useState({
     transactionType: "",
     grainType: "",
@@ -29,23 +66,23 @@ export default function ManualGrainEntry() {
     date: new Date().toISOString().split("T")[0],
     customerName: "",
     clientName: "",
-    notes: ""
+    notes: "",
   });
 
-  const toggleSidebar = () => setSidebarExpanded(!sidebarExpanded);
-
-  // Compute utilization percent
-  const totalGrains = Object.values(grainStorage).reduce((sum, g) => sum + g.current, 0);
+  const totalGrains = Object.values(grainStorage).reduce(
+    (sum, g) => sum + g.current,
+    0
+  );
   const availableSpace = totalCapacity - totalGrains;
-  const utilizationPercent = totalCapacity ? ((totalGrains / totalCapacity) * 100).toFixed(1) : 0;
+  const utilizationPercent = totalCapacity
+    ? ((totalGrains / totalCapacity) * 100).toFixed(1)
+    : 0;
 
-  // Handles form input changes
   const onInputChange = (e) => {
     const { name, value } = e.target;
-    setForm(f => ({ ...f, [name]: value }));
+    setForm((f) => ({ ...f, [name]: value }));
   };
 
-  // Resets the form inputs
   const resetForm = () => {
     setForm({
       transactionType: "",
@@ -54,19 +91,31 @@ export default function ManualGrainEntry() {
       date: new Date().toISOString().split("T")[0],
       customerName: "",
       clientName: "",
-      notes: ""
+      notes: "",
     });
   };
 
-  // Update storage quantities and history on submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation
-    const { transactionType, grainType, quantity, date, customerName, clientName } = form;
+    const {
+      transactionType,
+      grainType,
+      quantity,
+      date,
+      customerName,
+      clientName,
+    } = form;
     const qty = parseInt(quantity, 10);
 
-    if (!transactionType || !grainType || !quantity || !date || !customerName || !clientName) {
+    if (
+      !transactionType ||
+      !grainType ||
+      !quantity ||
+      !date ||
+      !customerName ||
+      !clientName
+    ) {
       alert("Please fill all required fields.");
       return;
     }
@@ -76,7 +125,9 @@ export default function ManualGrainEntry() {
     }
 
     if (transactionType === "out" && qty > grainStorage[grainType].current) {
-      alert(`Cannot remove ${qty} kg of ${grainType}. Only ${grainStorage[grainType].current} kg available.`);
+      alert(
+        `Cannot remove ${qty} kg of ${grainType}. Only ${grainStorage[grainType].current} kg available.`
+      );
       return;
     }
 
@@ -85,34 +136,38 @@ export default function ManualGrainEntry() {
         alert(`Adding ${qty} kg exceeds total capacity (${totalCapacity} kg).`);
         return;
       }
-      if (qty + grainStorage[grainType].current > grainStorage[grainType].capacity) {
-        alert(`Adding ${qty} kg exceeds ${grainType} capacity (${grainStorage[grainType].capacity} kg).`);
+      if (
+        qty + grainStorage[grainType].current >
+        grainStorage[grainType].capacity
+      ) {
+        alert(
+          `Adding ${qty} kg exceeds ${grainType} capacity (${grainStorage[grainType].capacity} kg).`
+        );
         return;
       }
     }
 
-    // Update storage state
-    setGrainStorage(prev => {
+    setGrainStorage((prev) => {
       const updated = { ...prev };
-      updated[grainType].current = transactionType === "in"
-        ? prev[grainType].current + qty
-        : prev[grainType].current - qty;
+      updated[grainType].current =
+        transactionType === "in"
+          ? prev[grainType].current + qty
+          : prev[grainType].current - qty;
       return updated;
     });
 
-    // Add to transaction history
-    setTransactionHistory(prev => [
-      {
-        date,
-        type: transactionType,
-        grain: grainType,
-        quantity: qty,
-        customer: customerName,
-        client: clientName,
-        notes: form.notes
-      },
-      ...prev
-    ]);
+    const newTransaction = {
+      id: Date.now(),
+      date,
+      type: transactionType,
+      grain: grainType,
+      quantity: qty,
+      customer: customerName,
+      client: clientName,
+      notes: form.notes,
+    };
+
+    setTransactionHistory((prev) => [newTransaction, ...prev]);
 
     alert(`Transaction recorded successfully!
 Type: ${transactionType === "in" ? "Grain In" : "Grain Out"}
@@ -124,319 +179,586 @@ Client: ${clientName}`);
     resetForm();
   };
 
-  // Returns color class for capacity bar
   const getCapacityColor = (percentage) => {
-    if (percentage < 60) return "bg-green-500";
-    if (percentage < 85) return "bg-yellow-400";
-    return "bg-red-600";
+    if (percentage < 60) return "#22c55e";
+    if (percentage < 85) return "#facc15";
+    return "#dc2626";
   };
 
+  // --- Style objects ---
+  const styles = {
+    section: {
+      backgroundColor: "white",
+      borderRadius: "8px",
+      boxShadow: "0 1px 6px rgba(0,0,0,0.1)",
+      padding: "24px",
+      marginBottom: "24px",
+    },
+    sectionTitle: {
+      color: "#0d9488",
+      fontWeight: "600",
+      fontSize: "24px",
+      marginBottom: "20px",
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+    },
+    welcomeSection: {
+      backgroundColor: "white",
+      borderRadius: "8px",
+      boxShadow: "0 1px 6px rgba(0,0,0,0.1)",
+      padding: "24px",
+      marginBottom: "24px",
+      textAlign: "center",
+    },
+    welcomeTitle: {
+      color: "#0d9488",
+      fontWeight: "600",
+      fontSize: "28px",
+      marginBottom: "16px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: "8px",
+    },
+    grid4: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+      gap: "24px",
+      marginBottom: "24px",
+    },
+    storageCard: {
+      backgroundColor: "#f3f4f6",
+      padding: "20px",
+      borderRadius: "8px",
+      boxShadow: "0 1px 6px rgba(0,0,0,0.1)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      borderLeft: "4px solid #0d9488",
+      transition: "transform 0.3s ease",
+      cursor: "default",
+    },
+    storageTitle: {
+      color: "#0d9488",
+      fontWeight: "600",
+      fontSize: "20px",
+      marginBottom: "16px",
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+    },
+    storageIcon: {
+      color: "#eab308",
+      fontSize: "24px",
+    },
+    storageInfoRow: {
+      width: "100%",
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "6px",
+      color: "#475569",
+      fontWeight: "600",
+    },
+    progressBarBackground: {
+      width: "100%",
+      height: "12px",
+      backgroundColor: "#d1d5db",
+      borderRadius: "6px",
+      overflow: "hidden",
+    },
+    progressBarFill: (color, widthPercent) => ({
+      height: "100%",
+      width: `${widthPercent}%`,
+      backgroundColor: color,
+      borderRadius: "6px",
+      transition: "width 0.5s ease",
+    }),
+    formGrid3: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+      gap: "24px",
+      marginBottom: "24px",
+    },
+    formGroup: {
+      display: "flex",
+      flexDirection: "column",
+    },
+    label: {
+      fontWeight: "600",
+      marginBottom: "8px",
+      color: "#475569",
+    },
+    input: {
+      border: "1px solid #cbd5e1",
+      borderRadius: "6px",
+      padding: "8px 12px",
+      fontSize: "16px",
+      outline: "none",
+      transition: "border-color 0.3s ease",
+    },
+    infoBox: {
+      backgroundColor: "#dcfce7",
+      border: "1px solid #bbf7d0",
+      borderRadius: "6px",
+      padding: "16px",
+      marginBottom: "24px",
+    },
+    infoTitle: {
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      color: "#166534",
+      fontWeight: "600",
+      marginBottom: "8px",
+    },
+    tableHeader: {
+      backgroundColor: "#0d9488",
+      color: "white",
+    },
+    tableHeaderCell: {
+      padding: "16px",
+      borderBottom: "2px solid #134e4a",
+      fontWeight: "600",
+      textAlign: "left",
+    },
+    tableCell: {
+      padding: "16px",
+      borderBottom: "1px solid #cbd5e1",
+    },
+    tableRow: {
+      cursor: "default",
+      transition: "background-color 0.3s ease",
+    },
+    badgeIn: {
+      padding: "4px 12px",
+      borderRadius: "9999px",
+      fontSize: "12px",
+      fontWeight: "600",
+      backgroundColor: "#dcfce7",
+      color: "#22c55e",
+      display: "inline-block",
+    },
+    badgeOut: {
+      padding: "4px 12px",
+      borderRadius: "9999px",
+      fontSize: "12px",
+      fontWeight: "600",
+      backgroundColor: "#fee2e2",
+      color: "#dc2626",
+      display: "inline-block",
+    },
+    buttonGroup: {
+      display: "flex",
+      gap: "16px",
+      flexWrap: "wrap",
+    },
+    pagination: {
+      display: "flex",
+      justifyContent: "center",
+      marginTop: "24px",
+      gap: "8px",
+    },
+    pageButton: (active) => ({
+      padding: "8px 16px",
+      borderRadius: "6px",
+      border: "1px solid #d1d5db",
+      backgroundColor: active ? "#0d9488" : "white",
+      color: active ? "white" : "#475569",
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+    }),
+  };
+
+  // Grain icons mapping
+  const grainIcons = {
+    wheat: "fas fa-wheat",
+    corn: "fas fa-corn",
+    rice: "fas fa-rice",
+    barley: "fas fa-seedling",
+  };
+
+  // Table column configuration
+  const transactionColumns = [
+    { key: "date", label: "Date" },
+    {
+      key: "type",
+      label: "Type",
+      render: (value) => (
+        <span style={value === "in" ? styles.badgeIn : styles.badgeOut}>
+          {value.toUpperCase()}
+        </span>
+      ),
+    },
+    {
+      key: "grain",
+      label: "Grain Type",
+      render: (value) => value.charAt(0).toUpperCase() + value.slice(1),
+    },
+    { key: "quantity", label: "Quantity (kg)" },
+    { key: "customer", label: "Customer" },
+    { key: "client", label: "Client" },
+  ];
+
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#f2fdfb] to-[#e6f4f1] text-gray-800">
-
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 right-0 flex items-center justify-between h-[70px] bg-gradient-to-r from-teal-700 to-teal-900 text-white px-6 shadow-md z-50">
-        <button onClick={toggleSidebar} className="text-2xl focus:outline-none">
-          <i className="fas fa-ellipsis-v"></i>
-        </button>
-        <div className="flex items-center space-x-2 text-lg font-semibold">
-          <i className="fas fa-seedling text-2xl"></i>
-          <h1>GrainZillow</h1>
-        </div>
-        <button className="bg-white text-teal-700 font-semibold rounded-md px-4 py-2 hover:bg-gray-100 transition">Logout</button>
-      </header>
-
-      {/* SIDEBAR */}
-      <nav className={`${sidebarExpanded ? "w-56" : "w-16"} fixed top-0 left-0 h-full bg-white shadow-lg pt-[70px] transition-all duration-300 overflow-hidden z-40`}>
-        <ul className="flex flex-col text-gray-700">
-          {[
-            { icon: "fas fa-home", label: "Dashboard" },
-            { icon: "fas fa-users", label: "Employee Management" },
-            { icon: "fas fa-tasks", label: "Task Assignment" },
-            { icon: "fas fa-comments", label: "Message Centre" },
-            { icon: "fas fa-history", label: "History Logs" },
-            { icon: "fas fa-pen", label: "Manual Grain Entry", active: true },
-            { icon: "fas fa-user", label: "My Profile" },
-            { icon: "fas fa-info-circle", label: "About Us" },
-            { icon: "fas fa-question-circle", label: "FAQs" },
-            { icon: "fas fa-phone", label: "Contact Us" }
-          ].map(({ icon, label, active }) => (
-            <li key={label}>
-              <a
-                href="#"
-                className={`flex items-center gap-3 px-4 py-3 border-l-4 border-transparent hover:bg-teal-100 hover:text-teal-900 transition ${
-                  active ? "bg-teal-100 border-teal-700 text-teal-900 font-semibold" : ""
-                }`}
-              >
-                <i className={`${icon} w-6 text-center`}></i>
-                <span className={`${sidebarExpanded ? "opacity-100" : "opacity-0"} transition-opacity whitespace-nowrap`}>{label}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      {/* MAIN CONTENT */}
-      <main className={`${sidebarExpanded ? "ml-56" : "ml-16"} flex-1 pt-[70px] px-10 pb-8 transition-all duration-300`}>
-
-        {/* Welcome */}
-        <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-6 mb-10 text-center">
-          <h1 className="text-teal-700 text-3xl font-bold mb-2">Manual Grain Entry</h1>
-          <p>Manage grain storage, track inventory, and record transactions for your assigned silo</p>
-        </div>
+    <Layout currentPage="Manual Grain Entry" variant="admin">
+      <ContentContainer>
+        {/* Welcome Section */}
+        <section style={styles.welcomeSection}>
+          <h1 style={styles.welcomeTitle}>
+            <i className="fas fa-pen"></i> Manual Grain Entry
+          </h1>
+          <p style={{ color: "#64748b", fontSize: "16px" }}>
+            Manage grain storage, track inventory, and record transactions for
+            your assigned silo
+          </p>
+        </section>
 
         {/* Total Storage Overview */}
-        <section className="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-6 mb-10">
-          <h2 className="text-teal-700 text-2xl font-semibold mb-5 flex items-center gap-2">
+        <section style={styles.section}>
+          <h2 style={styles.sectionTitle}>
             <i className="fas fa-chart-pie"></i> Overall Storage Capacity
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-6">
-            <div className="bg-gray-100 p-4 rounded shadow flex flex-col items-center border-l-4 border-teal-700">
-              <h4 className="text-gray-600 mb-2 text-sm font-semibold">Total Grains Stored</h4>
-              <div className="text-xl font-bold text-teal-700">{totalGrains.toLocaleString()} kg</div>
+          <div style={styles.grid4}>
+            <div style={styles.storageCard}>
+              <h4
+                style={{
+                  ...styles.storageInfoRow,
+                  justifyContent: "center",
+                  fontWeight: "600",
+                  color: "#64748b",
+                  fontSize: "14px",
+                  marginBottom: "8px",
+                }}
+              >
+                Total Grains Stored
+              </h4>
+              <div
+                style={{
+                  ...styles.storageInfoRow,
+                  justifyContent: "center",
+                  fontWeight: "700",
+                  fontSize: "20px",
+                  color: "#0d9488",
+                }}
+              >
+                {totalGrains.toLocaleString()} kg
+              </div>
             </div>
-            <div className="bg-gray-100 p-4 rounded shadow flex flex-col items-center border-l-4 border-teal-700">
-              <h4 className="text-gray-600 mb-2 text-sm font-semibold">Maximum Capacity</h4>
-              <div className="text-xl font-bold text-teal-700">{totalCapacity.toLocaleString()} kg</div>
+
+            <div style={styles.storageCard}>
+              <h4
+                style={{
+                  ...styles.storageInfoRow,
+                  justifyContent: "center",
+                  fontWeight: "600",
+                  color: "#64748b",
+                  fontSize: "14px",
+                  marginBottom: "8px",
+                }}
+              >
+                Maximum Capacity
+              </h4>
+              <div
+                style={{
+                  ...styles.storageInfoRow,
+                  justifyContent: "center",
+                  fontWeight: "700",
+                  fontSize: "20px",
+                  color: "#0d9488",
+                }}
+              >
+                {totalCapacity.toLocaleString()} kg
+              </div>
             </div>
-            <div className="bg-gray-100 p-4 rounded shadow flex flex-col items-center border-l-4 border-teal-700">
-              <h4 className="text-gray-600 mb-2 text-sm font-semibold">Available Space</h4>
-              <div className="text-xl font-bold text-teal-700">{availableSpace.toLocaleString()} kg</div>
+
+            <div style={styles.storageCard}>
+              <h4
+                style={{
+                  ...styles.storageInfoRow,
+                  justifyContent: "center",
+                  fontWeight: "600",
+                  color: "#64748b",
+                  fontSize: "14px",
+                  marginBottom: "8px",
+                }}
+              >
+                Available Space
+              </h4>
+              <div
+                style={{
+                  ...styles.storageInfoRow,
+                  justifyContent: "center",
+                  fontWeight: "700",
+                  fontSize: "20px",
+                  color: "#0d9488",
+                }}
+              >
+                {availableSpace.toLocaleString()} kg
+              </div>
             </div>
-            <div className="bg-gray-100 p-4 rounded shadow flex flex-col items-center border-l-4 border-teal-700">
-              <h4 className="text-gray-600 mb-2 text-sm font-semibold">Utilization</h4>
-              <div className="text-xl font-bold text-teal-700">{utilizationPercent}%</div>
+
+            <div style={styles.storageCard}>
+              <h4
+                style={{
+                  ...styles.storageInfoRow,
+                  justifyContent: "center",
+                  fontWeight: "600",
+                  color: "#64748b",
+                  fontSize: "14px",
+                  marginBottom: "8px",
+                }}
+              >
+                Utilization
+              </h4>
+              <div
+                style={{
+                  ...styles.storageInfoRow,
+                  justifyContent: "center",
+                  fontWeight: "700",
+                  fontSize: "20px",
+                  color: "#0d9488",
+                }}
+              >
+                {utilizationPercent}%
+              </div>
             </div>
           </div>
 
-          <div className="w-full h-4 bg-gray-300 rounded overflow-hidden">
+          <div
+            style={{
+              width: "100%",
+              height: "16px",
+              backgroundColor: "#d1d5db",
+              borderRadius: "8px",
+              overflow: "hidden",
+            }}
+          >
             <div
-              className="h-full rounded bg-gradient-to-r from-green-500 via-yellow-400 to-red-600 transition-width duration-500"
-              style={{ width: `${utilizationPercent}%` }}
+              style={{
+                height: "100%",
+                borderRadius: "8px",
+                transition: "width 0.5s ease",
+                backgroundImage:
+                  "linear-gradient(to right, #22c55e, #facc15, #dc2626)",
+                width: `${utilizationPercent}%`,
+              }}
             ></div>
           </div>
         </section>
 
         {/* Current Grain Storage */}
-        <section className="max-w-7xl mx-auto mb-10">
-          <h2 className="text-teal-700 text-2xl font-semibold mb-5">Current Grain Storage</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {Object.entries(grainStorage).map(([grain, { current, capacity }]) => {
-              const percent = (current / capacity) * 100;
-              const barColor = getCapacityColor(percent);
-              const iconMap = {
-                wheat: "fas fa-wheat",
-                corn: "fas fa-corn",
-                rice: "fas fa-rice",
-                barley: "fas fa-seedling"
-              };
-              return (
-                <div key={grain} className="bg-white rounded-lg shadow-md p-5 hover:-translate-y-1 transition-transform">
-                  <h3 className="flex items-center gap-3 text-teal-700 text-xl font-semibold mb-4">
-                    <i className={`${iconMap[grain]} text-yellow-500`}></i>
-                    {grain.charAt(0).toUpperCase() + grain.slice(1)} Storage
-                  </h3>
-                  <div className="flex justify-between mb-1 text-gray-600 font-semibold">
-                    <span>Current Quantity:</span>
-                    <span>{current.toLocaleString()} kg</span>
+        <section style={styles.section}>
+          <h2 style={styles.sectionTitle}>
+            <i className="fas fa-warehouse"></i> Current Grain Storage
+          </h2>
+          <div style={styles.grid4}>
+            {Object.entries(grainStorage).map(
+              ([grain, { current, capacity }]) => {
+                const percent = (current / capacity) * 100;
+                const barColor = getCapacityColor(percent);
+
+                return (
+                  <div
+                    key={grain}
+                    style={styles.storageCard}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "translateY(-4px)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "translateY(0)")
+                    }
+                  >
+                    <h3 style={styles.storageTitle}>
+                      <i
+                        className={grainIcons[grain]}
+                        style={styles.storageIcon}
+                      ></i>
+                      {grain.charAt(0).toUpperCase() + grain.slice(1)} Storage
+                    </h3>
+                    <div style={styles.storageInfoRow}>
+                      <span>Current Quantity:</span>
+                      <span>{current.toLocaleString()} kg</span>
+                    </div>
+                    <div style={styles.storageInfoRow}>
+                      <span>Capacity:</span>
+                      <span>{capacity.toLocaleString()} kg</span>
+                    </div>
+                    <div style={styles.progressBarBackground}>
+                      <div style={styles.progressBarFill(barColor, percent)} />
+                    </div>
                   </div>
-                  <div className="flex justify-between mb-1 text-gray-600 font-semibold">
-                    <span>Capacity:</span>
-                    <span>{capacity.toLocaleString()} kg</span>
-                  </div>
-                  <div className="w-full h-3 bg-gray-300 rounded">
-                    <div className={`${barColor} h-full rounded transition-all`} style={{ width: `${percent}%` }}></div>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              }
+            )}
           </div>
         </section>
 
         {/* Grain Transaction Entry Form */}
-        <section className="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-6 mb-10">
-          <h2 className="text-teal-700 text-2xl font-semibold mb-5">Grain Transaction Entry</h2>
+        <section style={styles.section}>
+          <h2 style={styles.sectionTitle}>
+            <i className="fas fa-edit"></i> Grain Transaction Entry
+          </h2>
 
-          <div className="bg-green-50 border border-green-200 rounded-md p-4 mb-6">
-            <h4 className="flex items-center gap-2 text-green-700 font-semibold mb-1">
-              <i className="fas fa-info-circle"></i>
-              Assigned Silo
+          <div style={styles.infoBox}>
+            <h4 style={styles.infoTitle}>
+              <i className="fas fa-info-circle"></i> Assigned Silo
             </h4>
-            <p>All transactions will be recorded for your assigned silo: <strong>Main Storage Facility</strong></p>
+            <p style={{ color: "#166534", margin: 0 }}>
+              All transactions will be recorded for your assigned silo:{" "}
+              <strong>Main Storage Facility</strong>
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} onReset={resetForm}>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
-              <div className="flex flex-col">
-                <label htmlFor="transactionType" className="font-semibold mb-2 text-gray-700">Transaction Type</label>
-                <select
-                  id="transactionType"
-                  name="transactionType"
-                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-teal-700"
+            <div style={styles.formGrid3}>
+              <div style={styles.formGroup}>
+                <SelectField
+                  label="Transaction Type"
                   value={form.transactionType}
-                  onChange={onInputChange}
+                  onChange={(e) => onInputChange(e)}
+                  name="transactionType"
+                  options={[
+                    { value: "", label: "Select Type" },
+                    { value: "in", label: "Grain In (Addition)" },
+                    { value: "out", label: "Grain Out (Removal)" },
+                  ]}
                   required
-                >
-                  <option value="">Select Type</option>
-                  <option value="in">Grain In (Addition)</option>
-                  <option value="out">Grain Out (Removal)</option>
-                </select>
+                />
               </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="grainType" className="font-semibold mb-2 text-gray-700">Grain Type</label>
-                <select
-                  id="grainType"
-                  name="grainType"
-                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-teal-700"
+              <div style={styles.formGroup}>
+                <SelectField
+                  label="Grain Type"
                   value={form.grainType}
-                  onChange={onInputChange}
+                  onChange={(e) => onInputChange(e)}
+                  name="grainType"
+                  options={[
+                    { value: "", label: "Select Grain" },
+                    { value: "wheat", label: "Wheat" },
+                    { value: "corn", label: "Corn" },
+                    { value: "rice", label: "Rice" },
+                    { value: "barley", label: "Barley" },
+                  ]}
                   required
-                >
-                  <option value="">Select Grain</option>
-                  <option value="wheat">Wheat</option>
-                  <option value="corn">Corn</option>
-                  <option value="rice">Rice</option>
-                  <option value="barley">Barley</option>
-                </select>
+                />
               </div>
 
-              <div className="flex flex-col">
-                <label htmlFor="quantity" className="font-semibold mb-2 text-gray-700">Quantity (kg)</label>
-                <input
-                  id="quantity"
-                  name="quantity"
+              <div style={styles.formGroup}>
+                <InputField
+                  label="Quantity (kg)"
                   type="number"
-                  min="1"
-                  placeholder="Enter quantity in kg"
-                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-teal-700"
+                  name="quantity"
                   value={form.quantity}
-                  onChange={onInputChange}
+                  onChange={(e) => onInputChange(e)}
+                  placeholder="Enter quantity in kg"
+                  min="1"
                   required
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
-              <div className="flex flex-col">
-                <label htmlFor="date" className="font-semibold mb-2 text-gray-700">Transaction Date</label>
-                <input
-                  id="date"
-                  name="date"
+            <div style={styles.formGrid3}>
+              <div style={styles.formGroup}>
+                <InputField
+                  label="Transaction Date"
                   type="date"
-                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-teal-700"
+                  name="date"
                   value={form.date}
-                  onChange={onInputChange}
+                  onChange={(e) => onInputChange(e)}
                   required
                 />
               </div>
-              <div className="flex flex-col">
-                <label htmlFor="customerName" className="font-semibold mb-2 text-gray-700">Customer/Farmer Name</label>
-                <input
-                  id="customerName"
+
+              <div style={styles.formGroup}>
+                <InputField
+                  label="Customer/Farmer Name"
+                  type="text"
                   name="customerName"
-                  type="text"
-                  placeholder="Enter customer name"
-                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-teal-700"
                   value={form.customerName}
-                  onChange={onInputChange}
+                  onChange={(e) => onInputChange(e)}
+                  placeholder="Enter customer name"
                   required
                 />
               </div>
-              <div className="flex flex-col">
-                <label htmlFor="clientName" className="font-semibold mb-2 text-gray-700">Client/Company Name</label>
-                <input
-                  id="clientName"
-                  name="clientName"
+
+              <div style={styles.formGroup}>
+                <InputField
+                  label="Client/Company Name"
                   type="text"
-                  placeholder="Enter client/company name"
-                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-teal-700"
+                  name="clientName"
                   value={form.clientName}
-                  onChange={onInputChange}
+                  onChange={(e) => onInputChange(e)}
+                  placeholder="Enter client/company name"
                   required
                 />
               </div>
             </div>
 
-            <div className="mb-6">
-              <label htmlFor="notes" className="font-semibold mb-2 block text-gray-700">Notes (Optional)</label>
-              <input
-                id="notes"
-                name="notes"
+            <div style={styles.formGroup}>
+              <InputField
+                label="Notes (Optional)"
                 type="text"
-                placeholder="Additional notes about this transaction"
-                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-teal-700"
+                name="notes"
                 value={form.notes}
-                onChange={onInputChange}
+                onChange={(e) => onInputChange(e)}
+                placeholder="Additional notes about this transaction"
               />
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button type="submit" className="btn bg-teal-700 hover:bg-teal-900 text-white px-6 py-3 rounded inline-flex items-center gap-2 font-semibold">
-                <i className="fas fa-save"></i> Save Transaction
-              </button>
-              <button type="reset" className="btn bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded inline-flex items-center gap-2 font-semibold">
-                <i className="fas fa-redo"></i> Reset Form
-              </button>
+            <div style={styles.buttonGroup}>
+              <Button variant="primary" icon="fa-save" type="submit">
+                Save Transaction
+              </Button>
+              <Button variant="secondary" icon="fa-redo" type="reset">
+                Reset Form
+              </Button>
             </div>
           </form>
         </section>
 
         {/* Transaction History */}
-        <section className="max-w-7xl mx-auto mb-10">
-          <h2 className="text-teal-700 text-2xl font-semibold mb-5">Transaction History</h2>
-          <div className="bg-white rounded-lg shadow-md overflow-x-auto">
-            <table className="w-full border-collapse text-gray-700">
-              <thead>
-                <tr className="bg-teal-700 text-white font-semibold text-left">
-                  <th className="p-4">Date</th>
-                  <th className="p-4">Type</th>
-                  <th className="p-4">Grain Type</th>
-                  <th className="p-4">Quantity (kg)</th>
-                  <th className="p-4">Customer</th>
-                  <th className="p-4">Client</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transactionHistory.map((t, idx) => (
-                  <tr key={idx} className="hover:bg-gray-100">
-                    <td className="p-4">{t.date}</td>
-                    <td className="p-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        t.type === "in" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-                      }`}>
-                        {t.type.toUpperCase()}
-                      </span>
-                    </td>
-                    <td className="p-4">{t.grain.charAt(0).toUpperCase() + t.grain.slice(1)}</td>
-                    <td className="p-4">{t.quantity}</td>
-                    <td className="p-4">{t.customer}</td>
-                    <td className="p-4">{t.client}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {/* Pagination - just UI here */}
-          <div className="flex justify-center mt-6 space-x-2">
-            {["1","2","3","4","5","Next"].map(label => (
+        <section style={styles.section}>
+          <h2 style={styles.sectionTitle}>
+            <i className="fas fa-history"></i> Transaction History
+          </h2>
+
+          <DataTable
+            columns={transactionColumns}
+            data={transactionHistory}
+            headerStyle={styles.tableHeaderCell}
+            rowStyle={styles.tableRow}
+            tableStyle={{
+              width: "100%",
+              borderCollapse: "collapse",
+              color: "#374151",
+            }}
+          />
+
+          {/* Pagination UI */}
+          <div style={styles.pagination}>
+            {["1", "2", "3", "4", "5", "Next"].map((label) => (
               <button
                 key={label}
-                className={`px-4 py-2 rounded border border-gray-300 hover:bg-gray-200 transition ${
-                  label === "1" ? "bg-teal-700 text-white border-teal-700" : "text-gray-700"
-                }`}
+                style={styles.pageButton(label === "1")}
+                onMouseEnter={(e) => {
+                  if (label !== "1") {
+                    e.currentTarget.style.backgroundColor = "#f3f4f6";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (label !== "1") {
+                    e.currentTarget.style.backgroundColor = "white";
+                  }
+                }}
               >
                 {label}
               </button>
             ))}
           </div>
         </section>
-      </main>
-
-      <footer className="bg-teal-900 text-white text-center py-3 mt-auto">
-        © 2025 GrainZillow — Smart Grain Storage Monitoring System
-      </footer>
-    </div>
+      </ContentContainer>
+    </Layout>
   );
 }

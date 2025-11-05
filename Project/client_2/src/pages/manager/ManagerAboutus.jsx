@@ -1,263 +1,412 @@
-import React, { useState } from "react";
+import React from "react";
+import Layout from "./components/Layout";
+import ContentContainer from "./components/ContentContainer";
+
+const teamMembers = [
+  {
+    name: "Talluri Jaswanth",
+    role: "Backend Developer",
+    responsibility: "Hardware, Database, IoT logic",
+  },
+  {
+    name: "Vuddanti Dhana Sekhar",
+    role: "Database Specialist and Documentation",
+    responsibility:
+      "Managing Database,SRS, technical reports, and presentation materials",
+  },
+  {
+    name: "Talari Hima Sai",
+    role: "Hardware Engineer & Frontend Developer",
+    responsibility:
+      "Designing Frontend, circuit connections, and hardware testing",
+  },
+  {
+    name: "Syed Ameer Basha",
+    role: " Teamlead and Frontend Developer",
+    responsibility: "Managing the team, Dashboard UI",
+  },
+  {
+    name: "Boddu Akhil",
+    role: "Research Analyst and Backend Developer",
+    responsibility: "Data collection, analysis, and system testing",
+  },
+];
+
+const features = [
+  {
+    icon: "fas fa-chart-line",
+    title: "Real-time Monitoring",
+    description:
+      "Continuous tracking of temperature, humidity, and gas levels (MQ2 & MQ135 sensors)",
+  },
+  {
+    icon: "fas fa-bell",
+    title: "Smart Alerts",
+    description:
+      "Instant notifications for unsafe conditions and potential hazards",
+  },
+  {
+    icon: "fas fa-fan",
+    title: "Remote Control",
+    description: "Web-based fan control and environmental management",
+  },
+  {
+    icon: "fas fa-tachometer-alt",
+    title: "Visual Dashboard",
+    description: "Intuitive interface with real-time data visualization",
+  },
+  {
+    icon: "fas fa-shield-alt",
+    title: "Secure Access",
+    description: "User authentication with silo-specific data protection",
+  },
+  {
+    icon: "fas fa-brain",
+    title: "AI Ready",
+    description: "Future integration with AI for predictive maintenance",
+  },
+];
+
+const institutionInfo = [
+  {
+    title: "Institution",
+    content: "Vellore Institute of Technology, Amaravati (VIT-AP)",
+  },
+  {
+    title: "Mentor",
+    content: "Yohoshiva Basaraboyina",
+  },
+  {
+    title: "Program",
+    content: "Principles of Software Engineering",
+  },
+  {
+    title: "Project Module",
+    content: "Academic Research Project",
+  },
+];
+
+const futureScopeItems = [
+  "AI Predictive Maintenance: Machine learning models to detect patterns before faults occur",
+  "Mobile Application: Companion app for remote silo management on-the-go",
+  "Cloud Analytics: Advanced dashboard for multi-silo management and analytics",
+  "Enhanced Alerts: GSM/Email notifications for critical conditions",
+  "Multi-language Support: Interface localization for global users",
+  "Blockchain Integration: Secure transaction tracking for grain storage and distribution",
+];
 
 export default function AboutUs() {
-  const [sidebarExpanded, setSidebarExpanded] = useState(false);
-
-  const toggleSidebar = () => setSidebarExpanded(!sidebarExpanded);
-
-  const teamMembers = [
-    {
-      name: "Talluri Jaswanth",
-      role: "Backend Developer",
-      responsibility: "Hardware, Database, IoT logic",
+  // --- Style objects ---
+  const styles = {
+    contentCard: {
+      backgroundColor: "white",
+      borderRadius: "12px",
+      boxShadow: "0 1px 6px rgba(0,0,0,0.1)",
+      padding: "24px",
+      marginBottom: "24px",
+      width: "100%",
     },
-    {
-      name: "Vuddanti Dhana Sekhar",
-      role: "Documentation Specialist",
-      responsibility: "SRS, technical reports, and presentation materials",
+    welcomeCard: {
+      backgroundColor: "white",
+      borderRadius: "12px",
+      boxShadow: "0 1px 6px rgba(0,0,0,0.1)",
+      padding: "24px",
+      marginBottom: "24px",
+      width: "100%",
+      textAlign: "center",
     },
-    {
-      name: "Talari Hima Sai",
-      role: "Hardware Support",
-      responsibility: "Design, circuit connections, and hardware testing",
+    headline: {
+      color: "#0d9488",
+      fontWeight: "700",
+      fontSize: "28px",
+      marginBottom: "12px",
     },
-    {
-      name: "Syed Ameer Basha",
-      role: "Frontend Developer",
-      responsibility: "Web Interface, Dashboard UI",
+    sectionTitle: {
+      color: "#0d9488",
+      fontWeight: "700",
+      fontSize: "24px",
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+      marginBottom: "24px",
     },
-    {
-      name: "Boddu Akhil",
-      role: "Research Analyst",
-      responsibility: "Data collection, analysis, and system testing",
+    grid3: {
+      width: "100%",
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+      gap: "24px",
+      marginBottom: "40px",
     },
-  ];
+    featureCard: {
+      backgroundColor: "#f3f4f6",
+      borderRadius: "12px",
+      padding: "24px",
+      border: "1px solid #bbf7d0",
+      textAlign: "center",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "16px",
+      transition: "transform 0.2s ease, box-shadow 0.2s ease",
+    },
+    featureIcon: {
+      color: "#0d9488",
+      fontSize: "36px",
+      marginBottom: "8px",
+    },
+    featureTitle: {
+      color: "#0d9488",
+      fontWeight: "600",
+      fontSize: "18px",
+    },
+    featureDescription: {
+      color: "#475569",
+      fontSize: "14px",
+      lineHeight: "1.5",
+    },
+    textGray: {
+      color: "#475569",
+      lineHeight: "1.5",
+      marginBottom: "16px",
+    },
+    teamCard: {
+      backgroundColor: "#f3f4f6",
+      borderRadius: "12px",
+      padding: "20px",
+      borderLeft: "6px solid #0d9488",
+      display: "flex",
+      flexDirection: "column",
+      gap: "8px",
+      transition: "transform 0.2s ease",
+    },
+    teamName: {
+      color: "#0d9488",
+      fontWeight: "600",
+      fontSize: "18px",
+      marginBottom: "4px",
+    },
+    teamRole: {
+      color: "#475569",
+      fontWeight: "600",
+      marginBottom: "4px",
+      fontSize: "14px",
+    },
+    futureScopeList: {
+      listStyleType: "disc",
+      paddingLeft: "20px",
+      color: "#475569",
+      marginTop: "0",
+      lineHeight: "1.6",
+    },
+    futureScopeItem: {
+      marginBottom: "8px",
+    },
+    institutionSection: {
+      backgroundImage: "linear-gradient(to bottom right, #dcfce7, #bbf7d0)",
+      borderRadius: "12px",
+      padding: "24px",
+      width: "100%",
+      marginBottom: "24px",
+    },
+    institutionGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+      gap: "24px",
+    },
+    institutionCard: {
+      backgroundColor: "white",
+      borderRadius: "12px",
+      padding: "16px",
+      boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+    },
+    institutionTitle: {
+      color: "#0d9488",
+      fontWeight: "600",
+      marginBottom: "8px",
+      fontSize: "16px",
+    },
+  };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#f2fdfb] to-[#e6f4f1] text-gray-800">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 flex items-center justify-between h-[70px] bg-gradient-to-r from-teal-700 to-teal-900 text-white px-6 shadow-md z-50">
-        <button
-          onClick={toggleSidebar}
-          className="text-2xl focus:outline-none"
-          aria-label="Toggle Sidebar"
-        >
-          <i className="fas fa-ellipsis-v"></i>
-        </button>
-        <div className="flex items-center space-x-2 text-lg font-semibold">
-          <i className="fas fa-seedling text-2xl"></i>
-          <h1>GrainZillow</h1>
-        </div>
-        <button className="bg-white text-teal-700 font-semibold rounded-md px-4 py-2 hover:bg-gray-100 transition">
-          Logout
-        </button>
-      </header>
-
-      {/* Sidebar */}
-      <nav
-        className={`fixed top-0 left-0 h-full bg-white shadow-lg pt-[70px] transition-all duration-300 overflow-hidden z-40 ${
-          sidebarExpanded ? "w-56" : "w-16"
-        }`}
-      >
-        <ul className="flex flex-col text-gray-700">
-          {[
-            { icon: "fas fa-home", label: "Dashboard" },
-            { icon: "fas fa-users", label: "Employee Management" },
-            { icon: "fas fa-tasks", label: "Task Assignment" },
-            { icon: "fas fa-comments", label: "Message Centre" },
-            { icon: "fas fa-history", label: "History Logs" },
-            { icon: "fas fa-pen", label: "Manual Grain Entry" },
-            { icon: "fas fa-user", label: "My Profile" },
-            { icon: "fas fa-info-circle", label: "About Us", active: true },
-            { icon: "fas fa-question-circle", label: "FAQs" },
-            { icon: "fas fa-phone", label: "Contact Us" },
-          ].map(({ icon, label, active }) => (
-            <li key={label}>
-              <a
-                href="#"
-                className={`flex items-center gap-3 px-4 py-3 border-l-4 border-transparent hover:bg-teal-100 hover:text-teal-900 transition ${
-                  active
-                    ? "bg-teal-100 border-teal-700 text-teal-900 font-semibold"
-                    : ""
-                }`}
-              >
-                <i className={`${icon} w-6 text-center`}></i>
-                <span
-                  className={`whitespace-nowrap transition-opacity ${
-                    sidebarExpanded ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  {label}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      {/* Main Content */}
-      <main
-        className={`flex-1 pt-[70px] px-10 pb-8 transition-all duration-300 ${
-          sidebarExpanded ? "ml-56" : "ml-16"
-        } flex flex-col items-center max-w-7xl mx-auto`}
-      >
+    <Layout currentPage="About Us" variant="admin">
+      <ContentContainer>
         {/* Welcome Section */}
-        <div className="bg-white rounded-lg shadow-md p-6 w-full text-center mb-10">
-          <h1 className="text-teal-700 text-3xl font-bold mb-2">About GrainZillow</h1>
-          <p>Learn about our mission to revolutionize grain storage through smart IoT technology</p>
-        </div>
+        <section style={styles.welcomeCard}>
+          <h1 style={styles.headline}>
+            <i className="fas fa-info-circle"></i> About GrainZillow
+          </h1>
+          <p style={{ color: "#64748b", fontSize: "16px" }}>
+            Learn about our mission to revolutionize grain storage through smart
+            IoT technology
+          </p>
+        </section>
 
         {/* Project Overview */}
-        <div className="bg-white rounded-xl shadow-md p-8 mb-8 w-full">
-          <h3 className="flex items-center gap-3 text-teal-700 text-xl font-semibold mb-4">
+        <section style={styles.contentCard}>
+          <h3 style={styles.sectionTitle}>
             <i className="fas fa-bullseye"></i> Project Overview
           </h3>
-          <p className="mb-4 text-gray-700 leading-relaxed">
-            <strong>GrainZillow</strong> is a smart IoT-based grain storage monitoring system designed to ensure safe and efficient grain management in silos. It continuously monitors temperature, humidity, and gas levels to detect early signs of spoilage or combustion, alerting warehouse managers in real-time.
+          <p style={styles.textGray}>
+            <strong>GrainZillow</strong> is a smart IoT-based grain storage
+            monitoring system designed to ensure safe and efficient grain
+            management in silos. It continuously monitors temperature, humidity,
+            and gas levels to detect early signs of spoilage or combustion,
+            alerting warehouse managers in real-time.
           </p>
-          <p className="text-gray-700 leading-relaxed">
-            Our system provides a comprehensive solution for agricultural storage facilities, combining cutting-edge sensor technology with an intuitive web interface for complete control and monitoring capabilities.
+          <p style={styles.textGray}>
+            Our system provides a comprehensive solution for agricultural
+            storage facilities, combining cutting-edge sensor technology with an
+            intuitive web interface for complete control and monitoring
+            capabilities.
           </p>
-        </div>
+        </section>
 
         {/* Problem Statement */}
-        <div className="bg-white rounded-xl shadow-md p-8 mb-8 w-full">
-          <h3 className="flex items-center gap-3 text-teal-700 text-xl font-semibold mb-4">
+        <section style={styles.contentCard}>
+          <h3 style={styles.sectionTitle}>
             <i className="fas fa-exclamation-triangle"></i> Problem Statement
           </h3>
-          <p className="mb-4 text-gray-700 leading-relaxed">
-            In many rural and industrial storage facilities, grains often get damaged due to improper temperature, humidity, and gas accumulation. Manual monitoring is inefficient, delayed, and sometimes impossible. Traditional methods lack real-time alerts and remote access capabilities.
+          <p style={styles.textGray}>
+            In many rural and industrial storage facilities, grains often get
+            damaged due to improper temperature, humidity, and gas accumulation.
+            Manual monitoring is inefficient, delayed, and sometimes impossible.
+            Traditional methods lack real-time alerts and remote access
+            capabilities.
           </p>
-          <p className="text-gray-700 leading-relaxed">
-            <strong>GrainZillow solves this</strong> by introducing automation and smart sensing for safer storage environments, preventing significant economic losses and ensuring food security through continuous, reliable monitoring.
+          <p style={styles.textGray}>
+            <strong>GrainZillow solves this</strong> by introducing automation
+            and smart sensing for safer storage environments, preventing
+            significant economic losses and ensuring food security through
+            continuous, reliable monitoring.
           </p>
-        </div>
+        </section>
 
         {/* Key Features */}
-        <h2 className="section-title flex items-center gap-3 text-teal-700 text-2xl mb-6">
+        <h2 style={styles.sectionTitle}>
           <i className="fas fa-star"></i> Key Features
         </h2>
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
-          {[
-            {
-              icon: "fas fa-chart-line",
-              title: "Real-time Monitoring",
-              description:
-                "Continuous tracking of temperature, humidity, and gas levels (MQ2 & MQ135 sensors)",
-            },
-            {
-              icon: "fas fa-bell",
-              title: "Smart Alerts",
-              description: "Instant notifications for unsafe conditions and potential hazards",
-            },
-            {
-              icon: "fas fa-fan",
-              title: "Remote Control",
-              description: "Web-based fan control and environmental management",
-            },
-            {
-              icon: "fas fa-tachometer-alt",
-              title: "Visual Dashboard",
-              description: "Intuitive interface with real-time data visualization",
-            },
-            {
-              icon: "fas fa-shield-alt",
-              title: "Secure Access",
-              description: "User authentication with silo-specific data protection",
-            },
-            {
-              icon: "fas fa-brain",
-              title: "AI Ready",
-              description: "Future integration with AI for predictive maintenance",
-            },
-          ].map(({ icon, title, description }) => (
-            <div key={title} className="bg-gray-100 rounded-lg p-6 border border-green-100 text-center">
-              <i className={`${icon} text-teal-700 text-3xl mb-4`}></i>
-              <h4 className="text-teal-700 text-lg font-semibold mb-2">{title}</h4>
-              <p className="text-gray-700 text-sm">{description}</p>
+        <div style={styles.grid3}>
+          {features.map(({ icon, title, description }) => (
+            <div
+              key={title}
+              style={styles.featureCard}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-4px)";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 1px 6px rgba(0,0,0,0.1)";
+              }}
+            >
+              <i className={icon} style={styles.featureIcon}></i>
+              <h4 style={styles.featureTitle}>{title}</h4>
+              <p style={styles.featureDescription}>{description}</p>
             </div>
           ))}
         </div>
 
         {/* Vision & Mission */}
-        <div className="bg-white rounded-xl shadow-md p-8 mb-8 w-full">
-          <h3 className="flex items-center gap-3 text-teal-700 text-xl font-semibold mb-4">
+        <section style={styles.contentCard}>
+          <h3 style={styles.sectionTitle}>
             <i className="fas fa-eye"></i> Our Vision
           </h3>
-          <p className="text-gray-700 leading-relaxed mb-6">
-            To revolutionize agricultural storage safety using intelligent automation and data-driven insights — ensuring zero grain loss and improved food security across global agricultural supply chains.
+          <p style={{ ...styles.textGray, marginBottom: "24px" }}>
+            To revolutionize agricultural storage safety using intelligent
+            automation and data-driven insights — ensuring zero grain loss and
+            improved food security across global agricultural supply chains.
           </p>
-          <h3 className="flex items-center gap-3 text-teal-700 text-xl font-semibold mb-4">
+          <h3 style={styles.sectionTitle}>
             <i className="fas fa-bullseye"></i> Our Mission
           </h3>
-          <p className="text-gray-700 leading-relaxed">
-            To provide an affordable and scalable IoT-based solution for farmers and warehouse managers that enables continuous monitoring, control, and optimization of grain storage systems, making advanced technology accessible to all stakeholders in the agricultural ecosystem.
+          <p style={styles.textGray}>
+            To provide an affordable and scalable IoT-based solution for farmers
+            and warehouse managers that enables continuous monitoring, control,
+            and optimization of grain storage systems, making advanced
+            technology accessible to all stakeholders in the agricultural
+            ecosystem.
           </p>
-        </div>
+        </section>
 
         {/* Our Team */}
-        <h2 className="section-title flex items-center gap-3 text-teal-700 text-2xl mb-6">
+        <h2 style={styles.sectionTitle}>
           <i className="fas fa-users"></i> Our Team
         </h2>
-        <div className="bg-white rounded-xl shadow-md p-6 w-full mb-10">
-          <p className="mb-6 text-gray-700">Meet the dedicated team behind GrainZillow's development and success:</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <section style={{ ...styles.contentCard, padding: "24px" }}>
+          <p style={{ ...styles.textGray, marginBottom: "24px" }}>
+            Meet the dedicated team behind GrainZillow's development and
+            success:
+          </p>
+          <div style={styles.grid3}>
             {teamMembers.map(({ name, role, responsibility }) => (
-              <div key={name} className="bg-gray-100 rounded-lg p-5 border-l-4 border-teal-700">
-                <h4 className="text-teal-700 font-semibold mb-2">{name}</h4>
-                <div className="text-gray-600 font-semibold mb-2">{role}</div>
-                <div className="text-gray-700 text-sm">{responsibility}</div>
+              <div
+                key={name}
+                style={styles.teamCard}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.transform = "translateY(-2px)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.transform = "translateY(0)")
+                }
+              >
+                <h4 style={styles.teamName}>{name}</h4>
+                <div style={styles.teamRole}>{role}</div>
+                <div
+                  style={{
+                    color: "#475569",
+                    fontSize: "14px",
+                    lineHeight: "1.4",
+                  }}
+                >
+                  {responsibility}
+                </div>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
         {/* Future Scope */}
-        <div className="bg-white rounded-xl shadow-md p-8 mb-8 w-full">
-          <h3 className="flex items-center gap-3 text-teal-700 text-xl font-semibold mb-4">
+        <section style={styles.contentCard}>
+          <h3 style={styles.sectionTitle}>
             <i className="fas fa-rocket"></i> Future Scope
           </h3>
-          <p className="text-gray-700 mb-4">We're continuously working to enhance GrainZillow with advanced features:</p>
-          <ul className="list-disc list-inside space-y-2 text-gray-700">
-            <li><strong>AI Predictive Maintenance:</strong> Machine learning models to detect patterns before faults occur</li>
-            <li><strong>Mobile Application:</strong> Companion app for remote silo management on-the-go</li>
-            <li><strong>Cloud Analytics:</strong> Advanced dashboard for multi-silo management and analytics</li>
-            <li><strong>Enhanced Alerts:</strong> GSM/Email notifications for critical conditions</li>
-            <li><strong>Multi-language Support:</strong> Interface localization for global users</li>
-            <li><strong>Blockchain Integration:</strong> Secure transaction tracking for grain storage and distribution</li>
+          <p style={{ ...styles.textGray, marginBottom: "16px" }}>
+            We're continuously working to enhance GrainZillow with advanced
+            features:
+          </p>
+          <ul style={styles.futureScopeList}>
+            {futureScopeItems.map((item, index) => (
+              <li key={index} style={styles.futureScopeItem}>
+                <strong>{item.split(":")[0]}:</strong>
+                {item.split(":")[1]}
+              </li>
+            ))}
           </ul>
-        </div>
+        </section>
 
         {/* Institution & Guidance */}
-        <div className="bg-gradient-to-br from-green-100 to-green-200 rounded-xl p-6 w-full">
-          <h3 className="text-green-800 text-xl font-semibold mb-4 flex items-center gap-3">
+        <section style={styles.institutionSection}>
+          <h3
+            style={{
+              ...styles.sectionTitle,
+              color: "#166534",
+              fontSize: "20px",
+            }}
+          >
             <i className="fas fa-graduation-cap"></i> Institution & Guidance
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="bg-white rounded p-4 shadow">
-              <h4 className="text-teal-700 font-semibold mb-2">Institution</h4>
-              <p>Vellore Institute of Technology, Amaravati (VIT-AP)</p>
-            </div>
-            <div className="bg-white rounded p-4 shadow">
-              <h4 className="text-teal-700 font-semibold mb-2">Mentor</h4>
-              <p>Yohoshiva Basaraboyina</p>
-            </div>
-            <div className="bg-white rounded p-4 shadow">
-              <h4 className="text-teal-700 font-semibold mb-2">Program</h4>
-              <p>Principles of Software Engineering</p>
-            </div>
-            <div className="bg-white rounded p-4 shadow">
-              <h4 className="text-teal-700 font-semibold mb-2">Project Module</h4>
-              <p>Academic Research Project</p>
-            </div>
+          <div style={styles.institutionGrid}>
+            {institutionInfo.map(({ title, content }) => (
+              <div key={title} style={styles.institutionCard}>
+                <h4 style={styles.institutionTitle}>{title}</h4>
+                <p style={{ color: "#374151", margin: 0, fontSize: "14px" }}>
+                  {content}
+                </p>
+              </div>
+            ))}
           </div>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-teal-900 text-white text-center py-3 mt-auto w-full">
-        © 2025 GrainZillow — Smart Grain Storage Monitoring System
-      </footer>
-    </div>
+        </section>
+      </ContentContainer>
+    </Layout>
   );
 }
